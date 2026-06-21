@@ -8,7 +8,12 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install || echo "No package.json yet, skipping install."
 
+# Copy source code and Docker entrypoint
 COPY . .
 
+# Ensure entrypoint script has executable permissions
+RUN chmod +x docker-entrypoint.sh
+
 EXPOSE 5173
+ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["npm", "run", "dev"]
